@@ -25,11 +25,14 @@ public class Hooks {
         System.out.println("===this will only apply to scenerios with @login tag");
     }
     @After
-    public void teardownScenario(Scenario scenario){
+    public void teardownScenario(Scenario scenario){ //we use scenario object
 
-        byte [] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+        //scenario.isFailed()--->İf scenario fails this methodwill return TRUE boolean value
+        if ( scenario.isFailed()) {
+            byte[] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+        }
 //burada resmin her bi piksel ini byte ile alıp toplamı bir resim yapıyor o yuzden byte [] kullanıyoruz
-        scenario.attach(screenshot, "image/png", scenario.getName());
+      //  scenario.attach(screenshot, "image/png", scenario.getName());
 
         Driver.closeDriver();
 
